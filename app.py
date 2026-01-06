@@ -4,7 +4,7 @@ import requests
 app = Flask(__name__)
 
 
-API_KEY = "##########"
+API_KEY = "###########"
 
 
 AI_API_URL = "https://api.example-ai.com/analyze"
