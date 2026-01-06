@@ -1,22 +1,15 @@
 from flask import Flask, request, jsonify
-import requests
+import os
 
 app = Flask(__name__)
 
-
-API_KEY = "###########"
-
-
-AI_API_URL = "https://api.example-ai.com/analyze"
+# Read Groq API key from environment (future use)
+API_KEY = os.environ.get("GROQ_API_KEY")
 
 @app.route("/analyze", methods=["POST"])
 def analyze_emotion():
     data = request.json
     text = data.get("text", "")
-
-    
-
-
 
     text_lower = text.lower()
 
@@ -34,6 +27,6 @@ def analyze_emotion():
         "emotion": emotion
     })
 
-
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
+
