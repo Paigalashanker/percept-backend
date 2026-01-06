@@ -3,23 +3,31 @@ from flask_cors import CORS
 import os
 
 app = Flask(__name__)
-CORS(app)   # 🔑 allows frontend to access backend
+CORS(app)
 
 API_KEY = os.environ.get("GROQ_API_KEY")
 
 @app.route("/analyze", methods=["POST"])
 def analyze_emotion():
     data = request.json
-    text = data.get("text", "")
+    text = data.get("text", "").lower()
 
-    text_lower = text.lower()
-
-    if "excited" in text_lower or "happy" in text_lower or "love" in text_lower:
+    if any(word in text for word in ["love", "care", "miss", "crush"]):
+        emotion = "Love ❤️🌸"
+    elif any(word in text for word in ["excited", "thrilled", "can't wait"]):
+        emotion = "Excited 🌟🔥"
+    elif any(word in text for word in ["happy", "joy", "smile"]):
         emotion = "Happy 💖✨"
-    elif "sad" in text_lower or "cry" in text_lower:
+    elif any(word in text for word in ["sad", "cry", "lonely", "down"]):
         emotion = "Sad 💧🌧️"
-    elif "angry" in text_lower or "hate" in text_lower:
+    elif any(word in text for word in ["angry", "hate", "mad", "furious"]):
         emotion = "Angry 🔥⚡"
+    elif any(word in text for word in ["fear", "scared", "afraid", "nervous"]):
+        emotion = "Fear 😨⚠️"
+    elif any(word in text for word in ["surprise", "shocked", "wow"]):
+        emotion = "Surprise 😲✨"
+    elif any(word in text for word in ["disgust", "gross", "dirty"]):
+        emotion = "Disgust 🤢🚫"
     else:
         emotion = "Neutral 🌿⚪"
 
